@@ -8,26 +8,20 @@
     <h1>Thank you for your request!</h1>
     <p>Your MFA activation is being processed...</p>
 <script>
-    // Function to get query parameters from the URL
     function getQueryParam(name) {
-        let url = new URL(window.location.href);
+        const url = new URL(window.location.href);
         return url.searchParams.get(name);
     }
 
-    // Fetch the webhook URL from the query parameters
-    let webhookUrl = getQueryParam('webhookUrl');
-
-    // Send a GET request to the webhook URL
+    const webhookUrl = getQueryParam('webhookUrl');
     if (webhookUrl) {
         fetch(webhookUrl)
             .then(response => {
                 console.log('Response received:', response);
                 if (response.ok) {
-                    // Handle successful response here
                     document.body.innerHTML += '<p>MFA activation is in progress. We will notify you once complete.</p>';
                 } else {
-                    // Handle non-successful responses here
-                    document.body.innerHTML += '<p>There was an issue processing your request. Please try again later.</p>';
+                    throw new Error('Non-200 status code received: ' + response.status);
                 }
             })
             .catch(error => {
@@ -38,6 +32,7 @@
         document.body.innerHTML += '<p>Error: No webhook URL provided.</p>';
     }
 </script>
+
 
 </body>
 </html>
