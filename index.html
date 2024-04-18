@@ -3,33 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Confirmation Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+        }
+        .header {
+            background: #0056b3; /* Adjust the color to match your branding */
+            padding: 20px 0;
+        }
+        .logo {
+            max-width: 150px; /* Adjust based on your logo size */
+        }
+        .content {
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .embedded {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
-    <h1>Thank you for your request!</h1>
-    <p>Your MFA activation is being processed...</p>
-<script>
-    function getQueryParam(name) {
-        const url = new URL(window.location.href);
-        return url.searchParams.get(name);
-    }
-
-    const webhookUrl = getQueryParam('webhookUrl');
-    if (webhookUrl) {
-        fetch(webhookUrl)
-            .then(response => {
-                console.log('Response received:', response);
-                if (response.ok) {
-                    document.body.innerHTML += '<p>MFA activation is in progress. We will notify you once complete.</p>';
-                } else {
-                    throw new Error('Non-200 status code received: ' + response.status);
-                }
-            })
-
-    } else {
-        document.body.innerHTML += '<p>Error: No webhook URL provided.</p>';
-    }
-</script>
-
-
+    <div class="header">
+        <img src="img/webitlogo.jpg" alt="Logo" class="logo">
+    </div>
+    <div class="content">
+        <h1>Thank You for Activating Your Multi-Factor Authentication!</h1>
+        <p>Your request is being processed. We will notify you once complete.</p>
+        
+        <!-- Embedded content area -->
+        <div class="embedded">
+            <!-- Your Tango embedded code goes here -->
+        </div>
+    </div>
+    <div class="footer">
+        © 2024 WEBIT Services. All rights reserved.
+    </div>
 </body>
 </html>
+
