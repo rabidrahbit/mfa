@@ -56,5 +56,31 @@
         © 2024 WEBIT Services. All rights reserved.
     </div>
 </body>
+    <script>
+    function getQueryParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+    }
+
+    const webhookUrl = getQueryParam('webhookUrl');
+    if (webhookUrl) {
+        fetch(webhookUrl)
+            .then(response => {
+                console.log('Response received:', response);
+                if (response.ok) {
+                    document.body.innerHTML += '<p>MFA activation is in progress. We will notify you once complete.</p>';
+                } else {
+                    throw new Error('Non-200 status code received: ' + response.status);
+                }
+            })
+            .catch(error => {
+                console.log('Error:', error);
+                document.body.innerHTML += '<p>There was an error processing your request: ' + error.message + '. Please check your network connection and try again.</p>';
+            });
+    } else {
+        document.body.innerHTML += '<p>Error: No webhook URL provided.</p>';
+    }
+</script>
+
 </html>
 
