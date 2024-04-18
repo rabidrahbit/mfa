@@ -75,7 +75,6 @@
             })
             .catch(error => {
                 console.log('Error:', error);
-                document.body.innerHTML += '<p>There was an error processing your request: ' + error.message + '. Please check your network connection and try again.</p>';
             });
     } else {
         document.body.innerHTML += '<p>Error: No webhook URL provided.</p>';
