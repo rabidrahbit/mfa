@@ -14,7 +14,7 @@ console.log('UUID:', uuid);
 
 if (webhookUrl && user && uuid) {
     const payload = { user, uuid };
-    console.log('Payload:', JSON.stringify(payload));
+    console.log('body:', JSON.stringify(payload));
 
     fetch(webhookUrl, {
         method: 'POST',
