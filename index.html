@@ -71,23 +71,29 @@
         const uuid = getQueryParam('uuid');
 
         if (webhookUrl && user && uuid) {
-            const fullWebhookUrl = `${webhookUrl}?user=${user}&uuid=${uuid}`;
-            fetch(fullWebhookUrl)
-                .then(response => {
-                    console.log('Response received:', response);
-                    if (response.ok) {
-                        document.body.innerHTML += '<p>MFA activation is in progress. We will notify you once complete.</p>';
-                    } else {
-                        throw new Error('Non-200 status code received: ' + response.status);
-                    }
-                })
-                .catch(error => {
-                    console.log('Error:', error);
-                });
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user, uuid })
+            })
+            .then(response => {
+                console.log('Response received:', response);
+                if (response.ok) {
+                    document.body.innerHTML += '<p>MFA activation is in progress. We will notify you once complete.</p>';
+                } else {
+                    throw new Error('Non-200 status code received: ' + response.status);
+                }
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
         } else {
             document.body.innerHTML += '<p>Error: Invalid Request.</p>';
         }
     </script>
 </body>
 </html>
+
 
