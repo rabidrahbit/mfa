@@ -14,7 +14,7 @@ console.log('UUID:', uuid);
 
 if (webhookUrl && user && uuid) {
     const payload = { user, uuid };
-    console.log('body:', JSON.stringify(payload));
+    console.log('Payload:', JSON.stringify(payload));
 
     fetch(webhookUrl, {
         method: 'POST',
@@ -42,3 +42,4 @@ if (webhookUrl && user && uuid) {
     console.error('Invalid Request:', { webhookUrl, user, uuid });
     document.body.innerHTML += '<p>Error: Invalid Request.</p>';
 }
+
