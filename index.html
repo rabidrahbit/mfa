@@ -70,32 +70,21 @@
         const user = getQueryParam('user');
         const uuid = getQueryParam('uuid');
         const timestamp = new Date().toISOString();
+        const secretKey = 'YOUR_SECRET_KEY'; // Replace with your actual secret key
 
         console.log('Webhook URL:', webhookUrl);
         console.log('User:', user);
         console.log('UUID:', uuid);
 
         if (webhookUrl && user && uuid) {
-            const payload = {
-                body: {
-                    user: user,
-                    uuid: uuid
-                },
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST',
-                params: {},
-                timestamp: timestamp
-            };
-            console.log('Payload:', JSON.stringify(payload));
+            const urlWithParams = `${webhookUrl}?user=${encodeURIComponent(user)}&uuid=${encodeURIComponent(uuid)}&timestamp=${encodeURIComponent(timestamp)}&secret=${encodeURIComponent(secretKey)}`;
+            console.log('URL with params:', urlWithParams);
 
-            fetch(webhookUrl, {
-                method: 'POST',
+            fetch(urlWithParams, {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
+                }
             })
             .then(response => {
                 console.log('Response received:', response);
@@ -119,3 +108,4 @@
     </script>
 </body>
 </html>
+
