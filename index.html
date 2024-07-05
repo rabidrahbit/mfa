@@ -70,6 +70,10 @@
         const user = getQueryParam('user');
         const uuid = getQueryParam('uuid');
 
+        console.log('Webhook URL:', webhookUrl);
+        console.log('User:', user);
+        console.log('UUID:', uuid);
+
         if (webhookUrl && user && uuid) {
             fetch(webhookUrl, {
                 method: 'POST',
@@ -90,10 +94,9 @@
                 console.log('Error:', error);
             });
         } else {
+            console.error('Invalid Request:', { webhookUrl, user, uuid });
             document.body.innerHTML += '<p>Error: Invalid Request.</p>';
         }
     </script>
 </body>
 </html>
-
-
