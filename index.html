@@ -49,38 +49,45 @@
         
         <!-- Embedded content area -->
         <div class="embedded">
-<iframe src="
-https://app.tango.us/app/embed/bb21352a-8fc4-41af-9daf-e1024b0f30c0"
-style="min-height:640px" sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin" security="restricted" title="Office 365 - End User MFA Instructions" width="100%" height="100%" referrerpolicy="strict-origin-when-cross-origin" frameborder="0" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>        </div>
+            <iframe src="https://app.tango.us/app/embed/bb21352a-8fc4-41af-9daf-e1024b0f30c0"
+                    style="min-height:640px" sandbox="allow-scripts allow-top-navigation-by-user-activation allow-popups allow-same-origin"
+                    security="restricted" title="Office 365 - End User MFA Instructions" width="100%" height="100%"
+                    referrerpolicy="strict-origin-when-cross-origin" frameborder="0" webkitallowfullscreen="webkitallowfullscreen"
+                    mozallowfullscreen="mozallowfullscreen" allowfullscreen="allowfullscreen"></iframe>
+        </div>
     </div>
     <div class="footer">
         © 2024 WEBIT Services. All rights reserved.
     </div>
 
     <script>
-    function getQueryParam(name) {
-        const url = new URL(window.location.href);
-        return url.searchParams.get(name);
-    }
+        function getQueryParam(name) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
 
-    const webhookUrl = getQueryParam('webhookUrl');
-    if (webhookUrl) {
-        fetch(webhookUrl)
-            .then(response => {
-                console.log('Response received:', response);
-                if (response.ok) {
-                    document.body.innerHTML += '<p>MFA activation is in progress. We will notify you once complete.</p>';
-                } else {
-                    throw new Error('Non-200 status code received: ' + response.status);
-                }
-            })
-            .catch(error => {
-                console.log('Error:', error);
-            });
-    } else {
-        document.body.innerHTML += '<p>Error: Invalid Request.</p>';
-    }
-</script>
+        const webhookUrl = getQueryParam('webhookUrl');
+        const user = getQueryParam('user');
+        const uuid = getQueryParam('uuid');
+
+        if (webhookUrl && user && uuid) {
+            const fullWebhookUrl = `${webhookUrl}?user=${user}&uuid=${uuid}`;
+            fetch(fullWebhookUrl)
+                .then(response => {
+                    console.log('Response received:', response);
+                    if (response.ok) {
+                        document.body.innerHTML += '<p>MFA activation is in progress. We will notify you once complete.</p>';
+                    } else {
+                        throw new Error('Non-200 status code received: ' + response.status);
+                    }
+                })
+                .catch(error => {
+                    console.log('Error:', error);
+                });
+        } else {
+            document.body.innerHTML += '<p>Error: Invalid Request.</p>';
+        }
+    </script>
 </body>
 </html>
 
